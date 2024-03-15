@@ -32,6 +32,36 @@ Feature: Update Query
       * InsertQuery sonuclari dogrulanir
       * Database baglantisi kapatilir.
 
+    @deleteQuery01
+    Scenario: Update_logs tablosunda "id=?" değerine göre
+              bir datayı siliniz ve silindiğini doğrulayınız.
+
+
+      * Delete Query hazirlanir ve execute edilir
+      * Datanin silindigi dogrulanir.
+      * Database baglantisi kapatilir.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

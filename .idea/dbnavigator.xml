@@ -28,25 +28,31 @@ select * from u168183796_qaloantec.cron_schedules;
 -- "usernamelerin" "mobile" numarasını update ediniz.
 
 
-UPDATE u168183796_qaloantec.users SET mobile = 111222333 WHERE username LIKE '%e_';
-SELECT mobile,username FROM u168183796_qaloantec.users WHERE username LIKE '%e_';
+update u168183796_qaloantec.users set mobile = 111222333 where username like '%e_';
+select mobile,username from u168183796_qaloantec.users where username like '%e_';
 
-INSERT INTO u168183796_qaloantec.admin_password_resets (id,email,token,status,created_at) VALUES (?,?,?,?,?);
+insert into u168183796_qaloantec.admin_password_resets (id,email,token,status,created_at) values (?,?,?,?,?);
 
 -- id,email,token,status,created_at
 
-SELECT * FROM u168183796_qaloantec.admin_password_resets WHERE id=3;
+select * from u168183796_qaloantec.admin_password_resets where id=3;
 
-SELECT id FROM u168183796_qaloantec.admin_password_resets;]]></console>
+select id from u168183796_qaloantec.admin_password_resets;
+
+-- Update_logs tablosunda "id=?" değerine göre
+--  bir datayı siliniz ve silindiğini doğrulayınız.
+
+
+SELECT id FROM u168183796_qaloantec.update_logs;
+
+DELETE FROM u168183796_qaloantec.update_logs WHERE id = 515;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="7541a1e5-9ffe-4cc3-91bf-69905762e22a" object-ref="consoles/Team130Loantec" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="7541a1e5-9ffe-4cc3-91bf-69905762e22a" />

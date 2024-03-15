@@ -3,6 +3,7 @@ package stepDefinition;
 import io.cucumber.java.en.Given;
 import manage.QueryManage;
 import org.junit.Assert;
+import utilities.ConfigReader;
 import utilities.JDBCReusableMethods;
 
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class StepDefinition {
 
@@ -57,6 +58,7 @@ public class StepDefinition {
         query = queryManage.getQuery02();
         resultSet = JDBCReusableMethods.getStatement().executeQuery(query);
     }
+
     @Given("ResultSet02 sonuclari islenir.")
     public void result_set02_sonuclari_islenir() throws SQLException {
 
@@ -71,15 +73,15 @@ public class StepDefinition {
 
 
         List<String> actualNames = new ArrayList<>();
-        while(resultSet.next()){
+        while (resultSet.next()) {
             String name = resultSet.getString("name");
             actualNames.add(name);
         }
 
-        for (int i = 0; i< actualNames.size(); i++ ){
+        for (int i = 0; i < actualNames.size(); i++) {
 
-            assertEquals(expectedNames.get(i),actualNames.get(i));
-            System.out.println(i +". index dogrulandi.");
+            assertEquals(expectedNames.get(i), actualNames.get(i));
+            System.out.println(i + ". index dogrulandi.");
 
         }
 
@@ -91,9 +93,10 @@ public class StepDefinition {
     public void update_query01_olusturulur_ve_execute_edilir() throws SQLException {
 
         query = queryManage.getUpdateQuery01();
-      rowCount = JDBCReusableMethods.updateQuery(query);
+        rowCount = JDBCReusableMethods.updateQuery(query);
 
     }
+
     @Given("UpdateQuery01 sonuclari islenir.")
     public void update_query01_sonuclari_islenir() {
 
@@ -108,19 +111,20 @@ public class StepDefinition {
 
         query = queryManage.getUpdateQuery02();
 
-       preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
 
-       preparedStatement.setInt(1, 147852369);
-       preparedStatement.setString(2, "%e_");
+        preparedStatement.setInt(1, 147852369);
+        preparedStatement.setString(2, "%e_");
 
-       rowCount = preparedStatement.executeUpdate();
+        rowCount = preparedStatement.executeUpdate();
 
 
     }
+
     @Given("Prepared UpdateQuery01 sonuclari islenir.")
     public void prepared_update_query01_sonuclari_islenir() {
 
-        assertEquals(18,rowCount);
+        assertEquals(18, rowCount);
     }
 
 
@@ -137,24 +141,56 @@ public class StepDefinition {
 
 
         preparedStatement.setInt(1, 11);
-        preparedStatement.setString(2,"tyuzotuz@gmail.com");
+        preparedStatement.setString(2, "tyuzotuz@gmail.com");
         preparedStatement.setString(3, "T13099");
-        preparedStatement.setInt(4,1);
+        preparedStatement.setInt(4, 1);
 
         rowCount = preparedStatement.executeUpdate();
 
 
     }
+
     @Given("InsertQuery sonuclari dogrulanir")
     public void ınsert_query_sonuclari_dogrulanir() {
 
-        assertEquals(1,rowCount);
+        assertEquals(1, rowCount);
+
+    }
+    // ************************* DELETE QUERY 01 **********************************
+
+    @Given("Delete Query hazirlanir ve execute edilir")
+    public void delete_query_hazirlanir_ve_execute_edilir() throws SQLException {
+
+        query = queryManage.getDeleteQuery01();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+
+        String silinecekID = ConfigReader.getProperty("DeleteQuery01SilinecekID");
+
+        preparedStatement.setString(1, silinecekID);
+        rowCount = preparedStatement.executeUpdate();
+
+        System.out.println(rowCount);
+        assertEquals(1, rowCount);
+
+
+        String controlQuery = queryManage.getDeleteControlQuery();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(controlQuery);
+
+        preparedStatement.setString(1, silinecekID);
+        resultSet = preparedStatement.executeQuery();
+
+
+        assertFalse(resultSet.next());
+
 
     }
 
+    @Given("Datanin silindigi dogrulanir.")
+    public void datanin_silindigi_dogrulanir() {
 
+        // Bu methodda olmasi greken kodlari bir ustteki methoda tasidik.
 
-
+    }
 
 
 }
