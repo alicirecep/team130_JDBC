@@ -14,7 +14,11 @@ public class QueryManage {
 
     private String deleteControlQuery = "SELECT * FROM u168183796_qaloantec.update_logs WHERE id = ?";
 
+    private String deleteQuery02Insert = "INSERT INTO u168183796_qaloantec.support_attachments (id, support_message_id, attachment, created_at) VALUES (?,?,?,?)";
 
+    private String deleteQuery02 = "DELETE FROM u168183796_qaloantec.support_attachments WHERE id = ?";
+
+    private String deleteQuery02Control = "SELECT * FROM u168183796_qaloantec.support_attachments WHERE id = ?";
 
 
 
@@ -40,6 +44,18 @@ public class QueryManage {
 
     public String getDeleteControlQuery() {
         return deleteControlQuery;
+    }
+
+    public String getDeleteQuery02Insert() {
+        return deleteQuery02Insert;
+    }
+
+    public String getDeleteQuery02() {
+        return deleteQuery02;
+    }
+
+    public String getDeleteQuery02Control() {
+        return deleteQuery02Control;
     }
 }
 

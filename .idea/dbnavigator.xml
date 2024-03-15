@@ -43,9 +43,22 @@ select id from u168183796_qaloantec.admin_password_resets;
 --  bir datayı siliniz ve silindiğini doğrulayınız.
 
 
-SELECT id FROM u168183796_qaloantec.update_logs;
+select id from u168183796_qaloantec.update_logs;
 
-DELETE FROM u168183796_qaloantec.update_logs WHERE id = 515;]]></console>
+delete from u168183796_qaloantec.update_logs where id = 515;
+
+-- "support_attachments" tablosunda "support_message_id=?"
+-- değerine göre  bir dosyayı siliniz ve silindiğini doğrulayınız.
+
+
+SELECT * FROM u168183796_qaloantec.support_attachments;
+
+-- id, support_message_id, attachment, created_at, updated_at)
+
+INSERT INTO u168183796_qaloantec.support_attachments (id, support_message_id, attachment, created_at) VALUES (?,?,?,?)
+
+
+DELETE FROM u168183796_qaloantec.support_attachments WHERE id = ?;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

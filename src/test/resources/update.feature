@@ -41,14 +41,18 @@ Feature: Update Query
       * Datanin silindigi dogrulanir.
       * Database baglantisi kapatilir.
 
+    @deleteQuery02
+    Scenario:  "support_attachments" tablosunda "id = ?"
+                değerine göre  bir dosyayı siliniz ve silindiğini doğrulayınız.
 
 
+    # Bu sorguyu yapabilmek icin (ozellikle projede) once kendimize ait bir veri olusturup sonra onu silmeliyiz.
 
 
-
-
-
-
+      * support_attachments tablosuna veri girilir.
+      * support_attachments tablosuna eklenen veri silinir
+      * Verinin silindigi dogrulanir.
+      * Database baglantisi kapatilir.
 
 
 

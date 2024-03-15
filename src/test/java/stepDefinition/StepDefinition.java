@@ -1,14 +1,17 @@
 package stepDefinition;
 
+import com.github.javafaker.Faker;
 import io.cucumber.java.en.Given;
 import manage.QueryManage;
 import org.junit.Assert;
 import utilities.ConfigReader;
 import utilities.JDBCReusableMethods;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,9 @@ public class StepDefinition {
     ResultSet resultSet;
     String query;
     int rowCount;
+    int id;
+
+    Faker faker = new Faker();
 
     QueryManage queryManage = new QueryManage();
 
@@ -192,5 +198,59 @@ public class StepDefinition {
 
     }
 
+
+    // **************************** DELETE QUERY 02 **********************
+
+
+    @Given("support_attachments tablosuna veri girilir.")
+    public void support_attachments_tablosuna_veri_girilir() throws SQLException {
+
+        query = queryManage.getDeleteQuery02Insert();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+
+        id = faker.number().numberBetween(700, 900);
+
+        // INSERT INTO u168183796_qaloantec.support_attachments
+        // (id, support_message_id, attachment, created_at) VALUES (?,?,?,?)
+        preparedStatement.setInt(1, id);
+        preparedStatement.setInt(2, 987456321);
+        preparedStatement.setString(3, "658401a61409c1703149990.png");
+        preparedStatement.setDate(4, Date.valueOf(LocalDate.now()));
+
+        rowCount = preparedStatement.executeUpdate();
+
+        System.out.println("Kayit edilen data id'si :  " + id);
+
+    }
+
+    @Given("support_attachments tablosuna eklenen veri silinir")
+    public void support_attachments_tablosuna_eklenen_veri_silinir() throws SQLException {
+
+        query = queryManage.getDeleteQuery02();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+
+        preparedStatement.setInt(1, id);
+        rowCount = preparedStatement.executeUpdate();
+        System.out.println(id + " id numarali veri silindi");
+
+        assertEquals(1, rowCount);
+    }
+
+    @Given("Verinin silindigi dogrulanir.")
+    public void verinin_silindigi_dogrulanir() throws SQLException {
+
+        query = queryManage.getDeleteQuery02Control();
+        preparedStatement = JDBCReusableMethods.getConnection().prepareStatement(query);
+
+        preparedStatement.setInt(1, id);
+
+        resultSet = preparedStatement.executeQuery();
+        assertFalse(resultSet.next());
+
+        if (!resultSet.next()) {
+            System.out.println(id + " id numarali veri bulunamadi");
+        }
+
+    }
 
 }
